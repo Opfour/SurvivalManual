@@ -61,12 +61,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     val onURLClick: (String) -> Unit = {
+        EventTracker.trackContent(it)
         if (it.startsWith("http")) {
             startActivityFromURL(it)
         } else if (!processProductLinks(it, this)) {
-            supportActionBar?.subtitle?.let { subtitle ->
-                EventTracker.trackContent(it, subtitle.toString())
-            }
 
             if (isImage(it)) {
                 val intent = Intent(this, ImageViewActivity::class.java)
